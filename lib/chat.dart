@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:movieflic/constant.dart';
 
 class ChatPage extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
-  final List<Map<String, String>> _messages = []; // Stores messages: user and bot responses
+  final List<Map<String, String>> _messages = []; 
   bool _isLoading = false;
 
   Future<void> _sendMessage() async {
@@ -17,7 +18,6 @@ class _ChatPageState extends State<ChatPage> {
 
     if (input.isEmpty) return;
 
-    // Add the user's message to the chat
     setState(() {
       _messages.add({'sender': 'user', 'text': input});
       _controller.clear();
@@ -25,9 +25,8 @@ class _ChatPageState extends State<ChatPage> {
     });
 
     try {
-      // Send user input to the backend to get movie recommendations
       final response = await http.post(
-        Uri.parse('http://192.168.1.133:5000/recommend'),
+        Uri.parse('${baseUrl}/recommend'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'preferences': input}),
       ).timeout(const Duration(seconds: 30));
@@ -71,7 +70,7 @@ class _ChatPageState extends State<ChatPage> {
         margin: EdgeInsets.symmetric(vertical: 4.0),
         padding: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: isUser ? Colors.redAccent : Colors.grey[850], // Dark grey for bot messages
+          color: isUser ? Colors.redAccent : Colors.grey[850], 
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
@@ -84,7 +83,7 @@ class _ChatPageState extends State<ChatPage> {
         child: Text(
           message['text'] ?? '',
           style: TextStyle(
-            color: isUser ? Colors.white : Colors.white70, // White for bot text
+            color: isUser ? Colors.white : Colors.white70, 
             fontSize: 16,
           ),
         ),
@@ -97,15 +96,15 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Movie Recommendation'),
-        backgroundColor: Colors.black, // Dark app bar
+        backgroundColor: Colors.black, 
       ),
       body: Container(
-        color: Colors.black, // Black background
+        color: Colors.black, 
         child: Column(
           children: [
             Expanded(
               child: ListView.builder(
-                reverse: true, // Newest messages appear at the bottom
+                reverse: true, 
                 padding: EdgeInsets.all(8.0),
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
@@ -129,15 +128,15 @@ class _ChatPageState extends State<ChatPage> {
                       decoration: InputDecoration(
                         hintText: 'Type Your Prefs.......',
                         // labelText: 'Type your preferences...',
-                        hintStyle: TextStyle(color: Colors.white), // White label
+                        hintStyle: TextStyle(color: Colors.white), 
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(color: Colors.white),
                         ),
                         filled: true,
-                        fillColor: Colors.grey[800], // Dark grey fill
+                        fillColor: Colors.grey[800], 
                       ),
-                      style: TextStyle(color: Colors.white), // White text
+                      style: TextStyle(color: Colors.white), 
                     ),
                   ),
                   IconButton(
