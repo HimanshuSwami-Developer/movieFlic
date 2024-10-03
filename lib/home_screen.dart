@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieflic/movie_screen.dart';
+import 'package:movieflic/robin_chat.dart';
 import 'package:movieflic/search.dart';
 
 class MainScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _screens = [
     MoviesScreen(),
     SearchScreen(),
+    ChatPage()
   ];
 
   void _onItemTapped(int index) {
@@ -40,6 +42,11 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.search),
             label: 'Search',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.recommend_outlined),
+            label: 'Recommendation',
+          ),
+          
         ],
       ),
     );
